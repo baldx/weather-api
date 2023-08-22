@@ -1,6 +1,6 @@
 @font-face {
     font-family: monserrat;
-    src: url('/dist/assets/Montserrat-VariableFont_wght.ttf');
+    src: url('assets/Montserrat-VariableFont_wght.ttf');
 }
 
 * {
@@ -11,7 +11,7 @@ body {
     margin: 0px;
     padding: 1em;
     font-family: monserrat, sans-serif;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/dist/assets/painting-mountain-lake-with-mountain-background.jpg');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('assets/painting-mountain-lake-with-mountain-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -91,3 +91,6 @@ main {
     font-size: 1.4em;
 }
 
+::placeholder {
+    color: white;
+}
