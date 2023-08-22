@@ -62,4 +62,32 @@ main {
 
 .right {
     justify-self: end;
+    font-size: 2em;
+    font-weight: 700;
 }
+
+.right > div {
+    margin: 32px;
+}
+
+#forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 100px;
+    margin-bottom: 150px;
+    font-weight: 700;
+}
+
+.name {
+    font-size: 1.7em;
+    margin-bottom: 16px;
+}
+
+.highest {
+    font-size: 2em;
+}
+
+.lowest {
+    font-size: 1.4em;
+}
+
