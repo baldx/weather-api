@@ -1,0 +1,65 @@
+@font-face {
+    font-family: monserrat;
+    src: url('/dist/assets/Montserrat-VariableFont_wght.ttf');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 1em;
+    font-family: monserrat, sans-serif;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/dist/assets/painting-mountain-lake-with-mountain-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2em;
+}
+
+.sky-info, .location, .degrees {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 16px;
+}
+
+.date, .time {
+    font-weight: 500;
+    margin-left: 16px;
+}
+
+#search {
+    font-size: 1em;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 1.3em;
+    padding: 8px;
+    outline: none;
+    font-family: monserrat;
+}
+
+#submit {
+    border: none;
+    padding: 8px;
+    font-size: 1.3em;
+    font-family: monserrat;
+    background: transparent;
+    color: white;
+}
+
+.right {
+    justify-self: end;
+}
