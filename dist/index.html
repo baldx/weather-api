@@ -8,13 +8,37 @@
     <title>Weather API</title>
 </head>
 <body>
-    <p class="weather"></p>
 
-    <form>
-        <label for="search"></label>
-        <input type="text" name="search" id="search">
-        <button type="submit" id="submit">Submit</button>
-    </form>
+    <main>
+        <div class="left">
+            <div class="sky-info">Clear</div>
+            <div class="location">Stockholm</div>
+            <div class="date">Wednesday 16/4</div>
+            <div class="time">4:20</div>
+            <div class="degrees">16</div>
+
+            <form>
+                <label for="search"></label>
+                <input type="text" name="search" id="search">
+                <button type="submit" id="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="right">
+            <div class="feel">16</div>
+            <div class="humidity">13</div>
+            <div class="rain">50%</div>
+            <div class="wind">4.3kmh</div>
+        </div>
     
+    </main>
+
+    <div id="forecast">
+        <div class="day">
+            <div class="name">wednesday</div>
+            <div class="highest">22</div>
+            <div class="lowest">11</div>
+        </div>
+    </div>
 </body>
 </html>
