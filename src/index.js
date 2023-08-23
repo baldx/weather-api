@@ -36,23 +36,29 @@ window.onload = async () => {
     console.log(convertData);
     
     degrees.innerHTML = convertData.current.temp_c + '°C'
-    date.innerHTML = dateNow.toLocaleString('en-IN', options)
+    date.innerHTML = dateNow.toLocaleString('en-IN', options);
     location.innerHTML = convertData.location.name;
     skyInfo.innerHTML = convertData.current.condition.text;
+    humidity.innerHTML += convertData.current.humidity + '%';
+    feel.innerHTML += convertData.current.feelslike_c + '°C';
+    wind.innerHTML += convertData.current.wind_kph + 'kph';
 }
 
 async function showData () {
     try {
         const response = await fetch(api, {mode: 'cors'})
-        const convert = await response.json()
-        console.log(convert);
+        const convertData = await response.json()
+        console.log(convertData);
 
         degrees.innerHTML = convertData.current.temp_c + '°C'
         date.innerHTML = dateNow.toLocaleString('en-IN', options)
         location.innerHTML = convertData.location.name;
         skyInfo.innerHTML = convertData.current.condition.text;
+        humidity.innerHTML = convertData.current.humidity + '%';
+        feel.innerHTML = convertData.current.feelslike_c + '°C';
+        wind.innerHTML = convertData.current.wind_kph + 'kph'
     } catch(err) {
-        degrees.innerHTML = 'No matching location found'
+        degrees.innerHTML = err
     }
 }
 
