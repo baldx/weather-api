@@ -94,3 +94,20 @@ main {
 ::placeholder {
     color: white;
 }
+
+.humidity-container, .feel-container, .rain-container, .wind-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: start;
+    align-items: center;
+}
+
+img {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+}
+
+.info {
+    font-size: 16px;
+}
