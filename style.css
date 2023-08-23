@@ -51,7 +51,7 @@ main {
     font-family: monserrat;
 }
 
-#submit {
+#submit, .change {
     border: none;
     padding: 8px;
     font-size: 1.3em;
@@ -110,4 +110,17 @@ img {
 
 .info {
     font-size: 16px;
+}
+
+.change {
+    border: 3px solid white;
+    border-radius: 5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.change:hover {
+    background: rgb(36, 36, 36);
+    transition: all 100ms;
 }
