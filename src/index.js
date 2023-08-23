@@ -22,32 +22,47 @@ const options =
     month: 'long',
     day: 'numeric',
 };
-let api;
+let apiCurrent;
+let apiForecast;
 
 submit.addEventListener('click', (e) => {
-    api = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
+    apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
+    apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
     showData()
     input.value = '';
     e.preventDefault()
 })
 
+async function future () {
+    const response = await fetch('http://api.weatherapi.com/v1/future.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
+    convertData = await response.json()
+    console.log(convertData);
+}
+
+async function forecast () {
+    const responseForecast = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
+    convertDataForecast = await responseForecast.json()
+    console.log(convertDataForecast);
+}
 
 window.onload = async () => {
-    const response = await fetch('https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
-    const convertData = await response.json()
+    const responseCurrent = await fetch('https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
+    const convertDataCurrent = await responseCurrent.json();
 
-    console.log(convertData);
+    forecast()
+    future()
+
+    console.log(convertDataCurrent);
     
-    degrees.innerHTML = convertData.current.temp_c + '°C'
+    degrees.innerHTML = convertDataCurrent.current.temp_c + '°C'
     date.innerHTML = dateNow.toLocaleString('en-IN', options);
-    location.innerHTML = convertData.location.name;
-    skyInfo.innerHTML = convertData.current.condition.text;
-    humidity.innerHTML += convertData.current.humidity + '%';
-    feel.innerHTML += convertData.current.feelslike_c + '°C';
-    wind.innerHTML += convertData.current.wind_kph + 'kph';
-    name.innerHTML = convertData.current.is_day;
+    location.innerHTML = convertDataCurrent.location.name;
+    skyInfo.innerHTML = convertDataCurrent.current.condition.text;
+    humidity.innerHTML += convertDataCurrent.current.humidity + '%';
+    feel.innerHTML += convertDataCurrent.current.feelslike_c + '°C';
+    wind.innerHTML += convertDataCurrent.current.wind_kph + 'kph';
+    name.innerHTML = convertDataCurrent.current.is_day;
 
-    console.log(convertData.current.maxtemp_c);
 
     change.addEventListener('click', () => {
         if (change.innerHTML === 'Switch to fahrenheit') {
@@ -64,7 +79,7 @@ window.onload = async () => {
 
 async function showData () {
     try {
-        const response = await fetch(api, {mode: 'cors'})
+        const response = await fetch(apiCurrent, {mode: 'cors'})
         const convertData = await response.json()
         console.log(convertData);
 
