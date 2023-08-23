@@ -11,6 +11,9 @@ const feel = document.querySelector('.feel');
 const humidity = document.querySelector('.humidity');
 const rain = document.querySelector('.rain');
 const wind = document.querySelector('.wind');
+const name = document.querySelector('.name');
+const change = document.querySelector('.change');
+
 const dateNow = new Date()
 const options = 
 {
@@ -42,6 +45,21 @@ window.onload = async () => {
     humidity.innerHTML += convertData.current.humidity + '%';
     feel.innerHTML += convertData.current.feelslike_c + '°C';
     wind.innerHTML += convertData.current.wind_kph + 'kph';
+    name.innerHTML = convertData.current.is_day;
+
+    console.log(convertData.current.maxtemp_c);
+
+    change.addEventListener('click', () => {
+        if (change.innerHTML === 'Switch to fahrenheit') {
+            degrees.innerHTML = convertData.current.temp_f + '°F'
+            feel.innerHTML = convertData.current.feelslike_f + '°F';
+            change.innerHTML = 'Switch to celsius';
+        } else {
+            degrees.innerHTML = convertData.current.temp_c + '°C'
+            feel.innerHTML = convertData.current.feelslike_c + '°C';
+            change.innerHTML = 'Switch to fahrenheit';
+        }
+    })
 }
 
 async function showData () {
