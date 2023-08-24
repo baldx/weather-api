@@ -14,6 +14,24 @@ const wind = document.querySelector('.wind');
 const name = document.querySelector('.name');
 const change = document.querySelector('.change');
 
+const mondayHighest = document.querySelector('.m-highest');
+const tuesdayHighest = document.querySelector('.tue-highest');
+const wednesdayHighest = document.querySelector('.w-highest');
+const thursdayHighest = document.querySelector('.thu-highest');
+const fridayHighest = document.querySelector('.fri-highest');
+const saturdayHighest = document.querySelector('.sat-highest');
+const sundayHighest = document.querySelector('.sun-highest');
+
+const mondayLowest = document.querySelector('.m-lowest');
+const tuesdayLowest = document.querySelector('.tue-lowest');
+const wednesdayLowest = document.querySelector('.w-lowest');
+const thursdayLowest = document.querySelector('.thu-lowest');
+const fridayLowest = document.querySelector('.fri-lowest');
+const saturdayLowest = document.querySelector('.sat-lowest');
+const sundayLowest = document.querySelector('.sun-lowest');
+const condition = document.querySelector('.condition')
+
+
 const dateNow = new Date()
 const options = 
 {
@@ -33,16 +51,15 @@ submit.addEventListener('click', (e) => {
     e.preventDefault()
 })
 
-async function future () {
-    const response = await fetch('http://api.weatherapi.com/v1/future.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
-    convertData = await response.json()
-    console.log(convertData);
-}
 
 async function forecast () {
-    const responseForecast = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
+    const responseForecast = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
     convertDataForecast = await responseForecast.json()
+
+    
     console.log(convertDataForecast);
+    mondayHighest.innerHTML = convertDataForecast.forecast.forecastday[0].day.maxtemp_c + ' °C';
+    mondayLowest.innerHTML = convertDataForecast.forecast.forecastday[0].day.mintemp_c + ' °C';
 }
 
 window.onload = async () => {
@@ -50,7 +67,6 @@ window.onload = async () => {
     const convertDataCurrent = await responseCurrent.json();
 
     forecast()
-    future()
 
     console.log(convertDataCurrent);
     
@@ -61,17 +77,16 @@ window.onload = async () => {
     humidity.innerHTML += convertDataCurrent.current.humidity + '%';
     feel.innerHTML += convertDataCurrent.current.feelslike_c + '°C';
     wind.innerHTML += convertDataCurrent.current.wind_kph + 'kph';
-    name.innerHTML = convertDataCurrent.current.is_day;
 
 
     change.addEventListener('click', () => {
         if (change.innerHTML === 'Switch to fahrenheit') {
-            degrees.innerHTML = convertData.current.temp_f + '°F'
-            feel.innerHTML = convertData.current.feelslike_f + '°F';
+            degrees.innerHTML = convertDataCurrent.current.temp_f + '°F'
+            feel.innerHTML = convertDataCurrent.current.feelslike_f + '°F';
             change.innerHTML = 'Switch to celsius';
         } else {
-            degrees.innerHTML = convertData.current.temp_c + '°C'
-            feel.innerHTML = convertData.current.feelslike_c + '°C';
+            degrees.innerHTML = convertDataCurrent.current.temp_c + '°C'
+            feel.innerHTML = convertDataCurrent.current.feelslike_c + '°C';
             change.innerHTML = 'Switch to fahrenheit';
         }
     })
