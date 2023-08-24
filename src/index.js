@@ -9,28 +9,14 @@ const time = document.querySelector('.time');
 
 const feel = document.querySelector('.feel');
 const humidity = document.querySelector('.humidity');
-const rain = document.querySelector('.rain');
+const rain = document.querySelectorAll('.rain');
 const wind = document.querySelector('.wind');
 const name = document.querySelector('.name');
 const change = document.querySelector('.change');
 
-const mondayHighest = document.querySelector('.m-highest');
-const tuesdayHighest = document.querySelector('.tue-highest');
-const wednesdayHighest = document.querySelector('.w-highest');
-const thursdayHighest = document.querySelector('.thu-highest');
-const fridayHighest = document.querySelector('.fri-highest');
-const saturdayHighest = document.querySelector('.sat-highest');
-const sundayHighest = document.querySelector('.sun-highest');
-
-const mondayLowest = document.querySelector('.m-lowest');
-const tuesdayLowest = document.querySelector('.tue-lowest');
-const wednesdayLowest = document.querySelector('.w-lowest');
-const thursdayLowest = document.querySelector('.thu-lowest');
-const fridayLowest = document.querySelector('.fri-lowest');
-const saturdayLowest = document.querySelector('.sat-lowest');
-const sundayLowest = document.querySelector('.sun-lowest');
-const condition = document.querySelector('.condition')
-
+const highestTemp = document.querySelectorAll('.highest');
+const lowestTemp = document.querySelectorAll('.lowest');
+const conditionAll = document.querySelectorAll('.condition');
 
 const dateNow = new Date()
 const options = 
@@ -40,6 +26,7 @@ const options =
     month: 'long',
     day: 'numeric',
 };
+
 let apiCurrent;
 let apiForecast;
 
@@ -58,8 +45,22 @@ async function forecast () {
 
     
     console.log(convertDataForecast);
-    mondayHighest.innerHTML = convertDataForecast.forecast.forecastday[0].day.maxtemp_c + ' °C';
-    mondayLowest.innerHTML = convertDataForecast.forecast.forecastday[0].day.mintemp_c + ' °C';
+
+    rain.forEach((element, array) => {
+        element.innerHTML += convertDataForecast.forecast.forecastday[array].day.daily_chance_of_rain + '%';
+    })
+
+    lowestTemp.forEach((element, array) => {
+        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+    })
+
+    highestTemp.forEach((element, array) => {
+        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+    })
+
+    conditionAll.forEach((element, array) => {
+        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.condition.text;
+    });
 }
 
 window.onload = async () => {
