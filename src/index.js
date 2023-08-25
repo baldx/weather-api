@@ -39,6 +39,26 @@ submit.addEventListener('click', (e) => {
     e.preventDefault()
 })
 
+async function onLoadForecast () {
+    const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
+    const convertData = await response.json();
+
+    rain.forEach((element, array) => {
+        element.innerHTML = convertData.forecast.forecastday[array].day.daily_chance_of_rain + '%';
+    })
+
+    lowestTemp.forEach((element, array) => {
+        element.innerHTML = convertData.forecast.forecastday[array].day.mintemp_c + ' °C';
+    })
+
+    highestTemp.forEach((element, array) => {
+        element.innerHTML = convertData.forecast.forecastday[array].day.maxtemp_c + ' °C';
+    })
+
+    conditionAll.forEach((element, array) => {
+        element.innerHTML = convertData.forecast.forecastday[array].day.condition.text;
+    });
+}
 
 async function forecast (response) {
     response = await fetch(apiForecast, {mode: 'cors'})
@@ -69,6 +89,7 @@ window.onload = async () => {
     const convertDataCurrent = await responseCurrent.json();
 
 
+    onLoadForecast()
     console.log(convertDataCurrent);
     
     degrees.innerHTML = convertDataCurrent.current.temp_c + '°C'
