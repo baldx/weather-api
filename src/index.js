@@ -32,22 +32,23 @@ let apiForecast;
 
 submit.addEventListener('click', (e) => {
     apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
-    apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
+    apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
     showData()
+    forecast()
     input.value = '';
     e.preventDefault()
 })
 
 
-async function forecast () {
-    const responseForecast = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
-    convertDataForecast = await responseForecast.json()
+async function forecast (response) {
+    response = await fetch(apiForecast, {mode: 'cors'})
+    convertDataForecast = await response.json()
 
     
     console.log(convertDataForecast);
 
     rain.forEach((element, array) => {
-        element.innerHTML += convertDataForecast.forecast.forecastday[array].day.daily_chance_of_rain + '%';
+        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.daily_chance_of_rain + '%';
     })
 
     lowestTemp.forEach((element, array) => {
@@ -67,7 +68,6 @@ window.onload = async () => {
     const responseCurrent = await fetch('https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=växjö', {mode: 'cors'})
     const convertDataCurrent = await responseCurrent.json();
 
-    forecast()
 
     console.log(convertDataCurrent);
     
@@ -97,6 +97,7 @@ async function showData () {
     try {
         const response = await fetch(apiCurrent, {mode: 'cors'})
         const convertData = await response.json()
+
         console.log(convertData);
 
         degrees.innerHTML = convertData.current.temp_c + '°C'
@@ -106,6 +107,7 @@ async function showData () {
         humidity.innerHTML = convertData.current.humidity + '%';
         feel.innerHTML = convertData.current.feelslike_c + '°C';
         wind.innerHTML = convertData.current.wind_kph + 'kph'
+        forecast()
     } catch(err) {
         degrees.innerHTML = err
     }
