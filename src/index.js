@@ -21,8 +21,7 @@ const celsius = document.querySelector('.celsius');
 const fahrenheit = document.querySelector('.fahrenheit');
 
 let tempChange = 0;
-
-isFirstSearch = true;
+let isFirstSearch = true;
 
 const dateNow = new Date()
 const options = 
@@ -41,6 +40,7 @@ celsius.addEventListener('click', () => {
     if (fahrenheit.classList.contains('active')) {
         fahrenheit.classList.toggle('active');
         celsius.classList.add('active');
+        tempChange = 0;
     }
 })
 
@@ -48,14 +48,15 @@ fahrenheit.addEventListener('click', () => {
     if (celsius.classList.contains('active')) {
         celsius.classList.remove('active');
         fahrenheit.classList.add('active');
-    }
-    
+        tempChange = 1;
+    }    
 })
 
 submit.addEventListener('click', (e) => {
     apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
     apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
     showData()
+    isFirstSearch = false;
     input.value = '';
     e.preventDefault()
 })
@@ -67,8 +68,6 @@ async function forecast () {
     response = await fetch(apiForecast, {mode: 'cors'})
     convertDataForecast = await response.json()
 
-    console.log(convertDataForecast);
-
     rain.forEach((element, array) => {
         element.innerHTML = convertDataForecast.forecast.forecastday[array].day.daily_chance_of_rain + '%';
     })
@@ -78,12 +77,10 @@ async function forecast () {
         else if (tempChange === 1) element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_f + ' °F';
         celsius.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
-            tempChange--;
         })
     
         fahrenheit.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_f + ' °F';
-            tempChange++;
         })
     })
 
@@ -93,12 +90,10 @@ async function forecast () {
         
         celsius.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
-            tempChange--;
         })
     
         fahrenheit.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_f + ' °F';
-            tempChange++;
         })
     })
 
@@ -117,16 +112,30 @@ async function onLoadForecast () {
 
     lowestTemp.forEach((element, array) => {
         element.innerHTML = convertData.forecast.forecastday[array].day.mintemp_c + ' °C';
+
+        fahrenheit.addEventListener('click', () => {
+            element.innerHTML = convertData.forecast.forecastday[array].day.mintemp_f + ' °F'
+        })
+        celsius.addEventListener('click', () => {
+            element.innerHTML = convertData.forecast.forecastday[array].day.mintemp_c + ' °C'
+        })
     })
 
     highestTemp.forEach((element, array) => {
         element.innerHTML = convertData.forecast.forecastday[array].day.maxtemp_c + ' °C';
+
+        fahrenheit.addEventListener('click', () => {
+            element.innerHTML = convertData.forecast.forecastday[array].day.maxtemp_f + ' °F'
+        })
+        celsius.addEventListener('click', () => {
+            element.innerHTML = convertData.forecast.forecastday[array].day.maxtemp_c + ' °C'
+        })
     })
 
     conditionAll.forEach((element, array) => {
         element.innerHTML = convertData.forecast.forecastday[array].day.condition.text;
     });
-    
+
 }
 
 async function firstSearch () {
@@ -143,11 +152,19 @@ async function firstSearch () {
     feel.innerHTML += convertDataCurrent.current.feelslike_c + ' °C';
     wind.innerHTML += convertDataCurrent.current.wind_kph + 'kph';
     
+    celsius.addEventListener('click', () => {
+        degrees.innerHTML = convertDataCurrent.current.temp_c + ' °C';
+        feel.innerHTML = convertDataCurrent.current.feelslike_c + ' °C';
+    })
+
+    fahrenheit.addEventListener('click', () => {
+        degrees.innerHTML = convertDataCurrent.current.temp_f + ' °F';
+        feel.innerHTML = convertDataCurrent.current.feelslike_f + ' °F';
+    })
 }
 
-if (isFirstSearch === true) {
+if (isFirstSearch) {
     firstSearch()
-    console.log(isFirstSearch);
 }
 
 async function showData () {
@@ -160,6 +177,8 @@ async function showData () {
         skyInfo.innerHTML = convertData.current.condition.text;
         humidity.innerHTML = convertData.current.humidity + '%';
         wind.innerHTML = convertData.current.wind_kph + 'kph'
+
+        forecast()
 
         if (tempChange === 0) {
             degrees.innerHTML = convertData.current.temp_c + ' °C';
@@ -178,10 +197,7 @@ async function showData () {
         fahrenheit.addEventListener('click', () => {
             degrees.innerHTML = convertData.current.temp_f + ' °F';
             feel.innerHTML = convertData.current.feelslike_f + ' °F';
-        })
-
-        forecast()
-        
+        })    
     } catch(err) {
         degrees.innerHTML = err
     }
