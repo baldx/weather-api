@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/baldx/weather-api/issues"
   },
-  "homepage": "https://github.com/baldx/weather-api#readme",
+  "homepage": "https://github.com/baldx/weather-api",
   "devDependencies": {
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
