@@ -74,10 +74,24 @@ async function forecast () {
 
     lowestTemp.forEach((element, array) => {
         element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+        celsius.addEventListener('click', () => {
+            element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+        })
+    
+        fahrenheit.addEventListener('click', () => {
+            element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_f + ' °F';
+        })
     })
 
     highestTemp.forEach((element, array) => {
         element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+        celsius.addEventListener('click', () => {
+            element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+        })
+    
+        fahrenheit.addEventListener('click', () => {
+            element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_f + ' °F';
+        })
     })
 
     conditionAll.forEach((element, array) => {
@@ -152,7 +166,13 @@ async function showData () {
         }
 
         celsius.addEventListener('click', () => {
-            
+            degrees.innerHTML = convertData.current.temp_c + ' °C';
+            feel.innerHTML = convertData.current.feelslike_c + ' °C';
+        })
+
+        fahrenheit.addEventListener('click', () => {
+            degrees.innerHTML = convertData.current.temp_f + ' °F';
+            feel.innerHTML = convertData.current.feelslike_f + ' °F';
         })
 
         forecast()
