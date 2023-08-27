@@ -19,6 +19,7 @@ const conditionAll = document.querySelectorAll('.condition');
 
 const celsius = document.querySelector('.celsius');
 const fahrenheit = document.querySelector('.fahrenheit');
+const validSpan = document.querySelector('.validation-message');
 
 let tempChange = 0;
 let isFirstSearch = true;
@@ -53,16 +54,29 @@ fahrenheit.addEventListener('click', () => {
 })
 
 submit.addEventListener('click', (e) => {
-    apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
-    apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
-    showData()
-    isFirstSearch = false;
-    input.value = '';
-    e.preventDefault()
+    if (formValidation()) {
+        apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
+        apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
+        showData()
+        isFirstSearch = false;
+        e.preventDefault()
+    } else e.preventDefault();
+    
 })
 
+function formValidation () {
+    if (input.validity.tooShort) {
+        validSpan.innerHTML = 'Minimum is 3 letters!'
+        return false;
+    } else {
+        validSpan.innerHTML = ''
+        return true;
+    }
+}
 
-
+function clearSearch () {
+    input.value = '';
+}
 
 async function forecast () {
     response = await fetch(apiForecast, {mode: 'cors'})
@@ -197,8 +211,11 @@ async function showData () {
         fahrenheit.addEventListener('click', () => {
             degrees.innerHTML = convertData.current.temp_f + ' °F';
             feel.innerHTML = convertData.current.feelslike_f + ' °F';
-        })    
+        })
+
+        clearSearch()
     } catch(err) {
-        degrees.innerHTML = err
+        degrees.innerHTML = `"${input.value}" is not a valid location`
+        clearSearch()
     }
 }
