@@ -62,6 +62,7 @@ submit.addEventListener('click', (e) => {
 
 
 
+
 async function forecast () {
     response = await fetch(apiForecast, {mode: 'cors'})
     convertDataForecast = await response.json()
@@ -73,24 +74,31 @@ async function forecast () {
     })
 
     lowestTemp.forEach((element, array) => {
-        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+        if (tempChange === 0) element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+        else if (tempChange === 1) element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_f + ' °F';
         celsius.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_c + ' °C';
+            tempChange--;
         })
     
         fahrenheit.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.mintemp_f + ' °F';
+            tempChange++;
         })
     })
 
     highestTemp.forEach((element, array) => {
-        element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+        if (tempChange === 0) element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+        else if (tempChange === 1) element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_f + ' °F';
+        
         celsius.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_c + ' °C';
+            tempChange--;
         })
     
         fahrenheit.addEventListener('click', () => {
             element.innerHTML = convertDataForecast.forecast.forecastday[array].day.maxtemp_f + ' °F';
+            tempChange++;
         })
     })
 
@@ -147,22 +155,19 @@ async function showData () {
         const response = await fetch(apiCurrent, {mode: 'cors'})
         const convertData = await response.json();
 
+        date.innerHTML = dateNow.toLocaleString('en-IN', options)
+        location.innerHTML = convertData.location.name;
+        skyInfo.innerHTML = convertData.current.condition.text;
+        humidity.innerHTML = convertData.current.humidity + '%';
+        wind.innerHTML = convertData.current.wind_kph + 'kph'
+
         if (tempChange === 0) {
             degrees.innerHTML = convertData.current.temp_c + ' °C';
             feel.innerHTML = convertData.current.feelslike_c + ' °C';
-            date.innerHTML = dateNow.toLocaleString('en-IN', options)
-            location.innerHTML = convertData.location.name;
-            skyInfo.innerHTML = convertData.current.condition.text;
-            humidity.innerHTML = convertData.current.humidity + '%';
-            wind.innerHTML = convertData.current.wind_kph + 'kph'
-        } else {
+            
+        } else if (tempChange === 1) {
             degrees.innerHTML = convertData.current.temp_f + ' °F';
             feel.innerHTML = convertData.current.feelslike_f + ' °F';
-            date.innerHTML = dateNow.toLocaleString('en-IN', options)
-            location.innerHTML = convertData.location.name;
-            skyInfo.innerHTML = convertData.current.condition.text;
-            humidity.innerHTML = convertData.current.humidity + '%';
-            wind.innerHTML = convertData.current.wind_kph + 'kph'
         }
 
         celsius.addEventListener('click', () => {
