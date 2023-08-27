@@ -51,7 +51,7 @@ main {
     font-family: monserrat;
 }
 
-#submit, .change {
+#submit, .celsius, .fahrenheit {
     border: none;
     padding: 8px;
     font-size: 1.3em;
@@ -123,15 +123,22 @@ img {
     font-size: 16px;
 }
 
-.change {
-    border: 3px solid white;
+.celsius, .fahrenheit {
     border-radius: 5px;
     margin-top: 8px;
     margin-bottom: 8px;
     font-weight: 600;
 }
 
-.change:hover {
+.celsius:hover, .fahrenheit:hover {
     background: rgb(36, 36, 36);
     transition: all 100ms;
+}
+
+.celsius, .fahrenheit {
+    width: 100px;
+}
+
+.active {
+    border: 3px solid white;
 }
