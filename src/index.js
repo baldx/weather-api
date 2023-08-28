@@ -56,7 +56,7 @@ fahrenheit.addEventListener('click', () => {
 submit.addEventListener('click', (e) => {
     if (formValidation()) {
         apiCurrent = `https://api.weatherapi.com/v1/current.json?key=28ff6b5ed367475281e170322232008&q=${input.value}`
-        apiForecast = `http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
+        apiForecast = `https://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=${input.value}&days=7`
         showData()
         isFirstSearch = false;
         e.preventDefault()
@@ -117,7 +117,7 @@ async function forecast () {
 }
 
 async function onLoadForecast () {
-    const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
+    const response = await fetch('https://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
     const convertData = await response.json();
 
     rain.forEach((element, array) => {
