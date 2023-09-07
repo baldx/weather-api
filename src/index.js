@@ -117,8 +117,10 @@ async function forecast () {
 }
 
 async function onLoadForecast () {
-    const response = await fetch('https://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=7', {mode: 'cors'})
+    const response = await fetch('https://api.weatherapi.com/v1/forecast.json?key=28ff6b5ed367475281e170322232008&q=växjö&days=3', {mode: 'cors'}) //error because PRO+ trial plan ran out, otherwise would work
     const convertData = await response.json();
+
+    console.log(convertData);
 
     rain.forEach((element, array) => {
         element.innerHTML = convertData.forecast.forecastday[array].day.daily_chance_of_rain + '%';
